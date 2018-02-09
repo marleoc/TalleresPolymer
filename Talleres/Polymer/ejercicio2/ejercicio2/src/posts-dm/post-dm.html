@@ -1,0 +1,79 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../user-dp/post-dp.html">
+
+<dom-module id="post-dm">
+  <template>
+    
+    <post-dp user={{user}}
+            id="idPostDP" 
+            posts="{{_lastResponse}}" 
+            error="{{_lastError}}">
+    </post-dp>
+  </template>
+
+  <script>
+    
+    class PostDm extends Polymer.Element {
+      static get is() { return 'post-dm'; }
+      static get properties() {
+        return {
+          posts: {
+            type: Array,
+            notify: true
+          },
+          _lastResponse: {
+            type: Array,
+            observer: '_onLastResponse'
+          },
+          _lastError: {
+            type: Object,
+            observer: '_onLastError'
+          },
+          user: {
+            type: String,
+            notify:true
+          }
+        };
+      }
+
+      connectedCallback(){
+        super.connectedCallback();
+        this.$.idPostDP.doRequest();
+      }
+      doRequest() {
+        console.log('doRequest en DM POST');
+        console.log('Valor en DM POST: '+this.user)
+        this.$.idPostDP.doRequest();
+      }
+
+      _onLastResponse(todos) {
+        console.log(todos)
+        let resultado = [];
+        for(let i = 0; i<todos.length; i++){
+          let todo = todos[i];
+          let codigo = todo.id;
+          let titulo = todo.title;
+          let cuerpo = todo.body;
+           
+          let post = {
+              titulo: titulo,
+              cuerpo: cuerpo,
+              codigo:codigo
+          }
+          resultado.push(post);
+        }
+        console.log('resultado:' + resultado.length);
+        this.set('posts', resultado);
+      }
+      _onLastError(error) {
+        if (error) {
+          console.log('_onLastError: error')
+        }
+      }
+
+
+    }
+
+    window.customElements.define(PostDm.is, PostDm);
+  </script>
+</dom-module>

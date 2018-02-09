@@ -1,0 +1,102 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html"> 
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+
+<dom-module id="componente-lista">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      body {
+display: flex;
+align-items: center;
+justify-content: center;
+  }
+  paper-card {
+  max-width: 500px;
+  }
+  .cafe-header { @apply --paper-font-headline; }
+  .cafe-light { color: var(--paper-grey-600); }
+  .cafe-location {
+float: right;
+font-size: 15px;
+vertical-align: middle;
+  }
+  .cafe-reserve { color: var(--google-blue-500); }
+  iron-icon.star {
+--iron-icon-width: 16px;
+--iron-icon-height: 16px;
+color: var(--paper-amber-500);
+  }
+  iron-icon.star:last-of-type { color: var(--paper-grey-500); }
+    </style>
+
+<template is="dom-repeat" 
+items="[[personas]]">
+<paper-card image="demo/donuts.png">
+  <div class="card-content">
+    <div class="cafe-header">nombre:[[item.nombre]]
+      <div class="cafe-location cafe-light">
+        <iron-icon icon="communication:location-on"></iron-icon>
+        <span>ciudad:[[item.ciudad]]</span>
+      </div>
+    </div>
+    <div class="cafe-rating">
+      <iron-icon class="star" icon="star"></iron-icon>
+      <iron-icon class="star" icon="star"></iron-icon>
+      <iron-icon class="star" icon="star"></iron-icon>
+      <iron-icon class="star" icon="star"></iron-icon>
+      <iron-icon class="star" icon="star"></iron-icon>
+    </div>
+    <p>$・Italian, Cafe</p>
+    <p class="cafe-light">Small plates, salads &amp; sandwiches in an intimate setting.</p>
+  </div>
+  <div class="card-actions">
+    <div class="horizontal justified">
+      <paper-icon-button icon="icons:event"></paper-icon-button>
+      <paper-button>5:30PM</paper-button>
+      <paper-button>7:30PM</paper-button>
+      <paper-button>9:00PM</paper-button>
+      <paper-button class="cafe-reserve">Reserve</paper-button>
+    </div>
+  </div>
+</paper-card> 
+</template>
+
+  </template>
+    
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Ejemplo001App extends Polymer.Element {
+      static get is() { return 'componente-lista'; }
+      static get properties() {
+        return {
+          personas: {
+            type: Array,
+            value: function () {
+            return [
+            { nombre: 'juan', ciudad: 'lima' },
+            { nombre: 'johnny', ciudad: 'pacheco' }
+            ];
+            }
+          } 
+          
+        };
+      } 
+    }
+
+    window.customElements.define(Ejemplo001App.is, Ejemplo001App);
+  </script>
+</dom-module>

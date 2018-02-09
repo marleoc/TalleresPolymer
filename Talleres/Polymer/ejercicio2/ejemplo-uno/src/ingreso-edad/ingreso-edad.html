@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+
+<dom-module id="ingreso-edad">
+    <template>
+        <style>
+        </style>
+        <input type="text" value="{{text::input}}" />
+
+    </template>
+    <script>
+         class EjemploUnoApp1 extends Polymer.Element {
+                static get is() { return 'ingreso-edad'; }
+                static get properties() {
+                    return {
+                        text: {
+                            type: String,
+                            value: 'Ingresar',
+                            notify: true
+                        }
+                    };
+                }
+                constructor() {
+                    super(); 
+                }          
+               
+        }
+
+        window.customElements.define(EjemploUnoApp1.is, EjemploUnoApp1);
+
+
+    </script>
+</dom-module>

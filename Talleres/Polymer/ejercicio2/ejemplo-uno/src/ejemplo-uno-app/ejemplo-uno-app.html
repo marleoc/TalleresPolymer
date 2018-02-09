@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/ingreso-edad/ingreso-edad.html">
+<link rel="import" href="/src/actualizar-edad/actualizar-edad.html">
+
+<dom-module id="ejemplo-uno-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[text]]!</h2>
+    <ingreso-edad text="{{text}}"></ingreso-edad>
+    <actualizar-edad text="[[text]]"></actualizar-edad>
+    
+    
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class EjemploUnoApp extends Polymer.Element {
+      static get is() { return 'ejemplo-uno-app'; }
+      static get properties() {
+        return {
+          text: {
+            type: String,
+            value: 'Juan'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(EjemploUnoApp.is, EjemploUnoApp);
+  </script>
+</dom-module>

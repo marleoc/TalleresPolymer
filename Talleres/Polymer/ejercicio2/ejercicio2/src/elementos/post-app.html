@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../user-dm/post-dm.html">
+
+
+<dom-module id="post-app">
+  <template>
+    <style>
+      
+    </style>
+    <post-dm user={{user}}
+            id="idPostDM" 
+            posts="{{_lastResponse}}" 
+            error="{{_lastError}}">
+    </post-dm>    
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ModalApp extends Polymer.Element {
+      static get is() { return 'post-app'; }
+      static get properties() {
+        return {
+          user: {
+            type: String,
+            value: "",
+            // observer:'_updateUsers'
+          },
+          posts:{
+            type:Array,
+            value:[]
+          }  
+        };
+      } 
+      connectedCallback (){
+        super.connectedCallback();
+        console.log('componente creado en Post View'+this.user);
+        this.$.idPostDM.doRequest();
+      }
+    } 
+    window.customElements.define(ModalApp.is, ModalApp);
+  </script>
+</dom-module>

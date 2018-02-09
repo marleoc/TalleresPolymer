@@ -1,0 +1,39 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+
+<dom-module id="actualizar-edad">
+    <template>
+        <style>
+        </style>
+        <button on-click="_enviar">[[text]]</button>
+
+    </template>
+    <script>
+         class EjemploUnoApp3 extends Polymer.Element {
+                static get is() { return 'actualizar-edad'; }
+                static get properties() {
+                    return {
+                        text: {
+                            type: String,
+                            value: 'Ingresar'
+                        }
+                    };
+                }
+                constructor() {
+                    super(); 
+                }
+                ready() {
+                    super.ready();
+                    this.addEventListener('click', (e) => this._enviar(e), true);
+                }
+                _enviar() {
+                    console.log('ingreso-edad:_onClickButton', this.text);
+                    this.text='ENVIAR';
+                    //this.set('text', this.text);
+                }
+        }
+
+        window.customElements.define(EjemploUnoApp3.is, EjemploUnoApp3);
+
+    </script>
+</dom-module>

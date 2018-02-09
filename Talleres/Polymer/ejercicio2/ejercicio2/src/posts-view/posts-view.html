@@ -1,0 +1,123 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-datatable-api/paper-datatable-api-column.html">
+<link rel="import" href="../../bower_components/paper-datatable-api/paper-datatable-api.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-datatable-api/paper-datatable-api-icons.html">
+<link rel="import" href="../../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../posts-dm/post-dm.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../../bower_components/iron-swipeable-container/iron-swipeable-container.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<dom-module id="posts-view">
+  <style is="custom-style" include="demo-pages-shared-styles">
+  paper-dropdown-menu, paper-listbox {
+    width: 250px;
+  }
+
+  paper-dropdown-menu {
+    height: 200px;
+    margin: auto;
+    display: block;
+  }
+  paper-card {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    .item {
+      margin-bottom: 16px;
+      padding: 20px;
+      background-color: var(--paper-lime-500);
+    }
+    .item.blue {
+      background-color: var(--paper-blue-300);
+    }
+    /* If you want your things to swipe nicely, you might want to disable
+     * text selection on those elements. */
+    .swipe {
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      cursor: default;
+    }
+  </style>
+
+
+  <template>
+    <post-dm user={{user}} posts={{posts}} id="idPostDM"></post-dm>    
+    
+    <iron-swipeable-container disable-swipe>
+      <paper-card heading="Posts Realizados"></paper-card>
+    <div><paper-datatable-api selectable-data-key="codigo" data="{{posts}}" selectable>
+    <paper-datatable-api-column draggable-column header="Codigo" property="codigo">
+      <template>
+        <span>{{value}}</span>  
+      </template>
+    </paper-datatable-api-column>
+  <paper-datatable-api-column draggable-column header="Titulo" property="titulo">
+    <template>  
+        <span>{{value}}</span>
+    </template>
+  </paper-datatable-api-column>
+  <paper-datatable-api-column draggable-column header="Contenido" property="cuerpo">
+    <template>
+        <span>{{value}}</span>
+        
+        <div tabindex="0">
+        <iron-icon icon="paper-datatable-api-icons:search" on-click="_verComentarios" prefix></iron-icon>Ver Comentarios
+        <paper-tooltip position="left">Ver Comentarios</paper-tooltip>
+        </div>
+    </template>
+  </paper-datatable-api-column>
+  
+  </paper-datatable-api></div>
+    
+  </iron-swipeable-container>
+
+ 
+     
+  
+  </template> 
+
+  <script>
+    /**
+     * `user-view`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PostsView extends Polymer.Element {
+      static get is() { return 'posts-view'; }
+      static get properties() {
+        return {
+          users: {
+            type: Array,
+            value: []
+          },
+           posts:{
+            type: Array,
+            value: [],
+            notify:true
+           },
+           user:{
+            type: String,
+            value:''
+           }
+          };
+         }
+
+      doRequest(){
+        this.$.idPostDM.doRequest();
+      } 
+    }
+    window.customElements.define(PostsView.is, PostsView);
+    
+  </script>
+</dom-module>

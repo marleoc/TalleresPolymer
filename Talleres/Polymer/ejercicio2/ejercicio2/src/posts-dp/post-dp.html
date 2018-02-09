@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+
+<dom-module id="post-dp">
+  <style is="custom-style">
+  paper-spinner, paper-spinner-lite {
+    margin: 8px 8px 8px 0;
+  }
+  paper-spinner-lite.orange {
+    --paper-spinner-color: var(--google-yellow-500);
+  }
+  paper-spinner-lite.green {
+    --paper-spinner-color: var(--google-green-500);
+  }
+  paper-spinner-lite.thin {
+    --paper-spinner-stroke-width: 1px;
+  }
+  paper-spinner-lite.thick {
+    --paper-spinner-stroke-width: 6px;
+  }
+  #container {
+    /*display: flex;*/
+    margin:0 auto;
+  }
+</style>
+  <template>
+      <iron-ajax 
+            id="ajaxComponentB" 
+            url="https://jsonplaceholder.typicode.com/posts?userId={{user}}" 
+            handle-as="json" 
+            last-response="{{posts}}"
+            last-error="{{error}}"
+            loading="{{cargando1}}">
+      </iron-ajax>
+      <div id="container" style="width:100%"><paper-spinner active="{{cargando1}}" class="green"></paper-spinner></div>
+  </template>
+
+  <script>
+    
+    class PostDp extends Polymer.Element {
+      static get is() { return 'post-dp'; }
+      static get properties() {
+        return {
+          posts: {
+            type: Array,
+            value: [],
+            notify:true
+          },
+          error:{
+            type:Object,
+            notify:true
+          },
+          user: {
+            type: String,
+            notify:true
+          },
+          cargando1:{
+            type:Boolean,
+            value:true
+          }
+        };
+      }
+
+      doRequest(){
+        console.log('doRequest en DP POST'); 
+        console.log('https://jsonplaceholder.typicode.com/posts/'+this.user)
+        this.$.ajaxComponentB.generateRequest();
+      }
+
+
+
+    }
+
+    window.customElements.define(PostDp.is, PostDp);
+  </script>
+</dom-module>

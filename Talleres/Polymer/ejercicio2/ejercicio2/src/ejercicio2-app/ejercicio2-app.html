@@ -1,0 +1,98 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../user-view/user-view.html">
+<link rel="import" href="../posts-view/posts-view.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<dom-module id="ejercicio2-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #idPostVM{
+        display: none
+      }
+
+    </style>
+    <paper-card heading="Publicaciones de Usuarios"></paper-card>
+    <user-view users=[[users]] user={{user}} ></user-view>
+    <!--paper-button raised class="indigo" on-click="_enviar">Ver Posts</paper-button-->
+    <posts-view id="idPostVM" user=[[user]] posts="{{posts}}"></posts-view>
+   </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Ejercicio2App extends Polymer.Element {
+      static get is() { return 'ejercicio2-app'; }
+      static get properties() {
+        return {
+          users: {
+            type: Array,
+            value: [],
+            // observer:'_updateUsers'
+          },
+          posts: {
+            type: Array,
+            value: [],
+            observer:'_updatePosts'
+          },
+          user: {
+            type: String,
+            value: '',
+            observer:'_updateUsers'
+          }
+        };
+      }
+      _enviar(){
+        super.connectedCallback();
+        //console.log(this.$.valSelect.value);
+        //this.user = this.$.valSelect.value;
+        // this.user = document.getElementById("valSelect").value;
+        console.log("El usuario: "+this.user)
+        this.$.idPostVM.doRequest();  
+      }
+      /*
+      ready(){
+        super.ready
+        console.log("Elemento Listo")
+         var elem = document.createElement('posts-view');
+         document.body.appendChild(elem); // <posts-view user={{user}} posts={{posts}}></posts-view>
+      } */
+      _updateUsers(){
+        console.log("cambio en variable usuario:"+this.user)
+        //document.getElementById("id")
+        this.$.idPostVM.doRequest();  
+        
+      }
+      _updatePosts(){
+        console.log("Tamanio de posts: "+this.posts.length);
+        console.log(this.posts)
+        if(this.posts.length>0){
+            this.$.idPostVM.style.display="block"
+        }
+      }
+      _verComentarios(){
+        console.log("x")
+      }
+      constructor() {
+        super();
+    // When possible, use afterNextRender to defer non-critical
+    // work until after first paint.
+          Polymer.RenderStatus.afterNextRender(this, function() {
+            console.log("Aqui")
+            var elem = document.createElement('posts-view');
+            //document.body.append(elem);
+            //elem.setAttribute("user", '{{user}}')
+            //elem.setAttribute("posts", '{{posts}}')
+            // this.addEventListener('click', this._handleClick);
+        });
+      } 
+    }
+
+    window.customElements.define(Ejercicio2App.is, Ejercicio2App);
+  </script>
+</dom-module>

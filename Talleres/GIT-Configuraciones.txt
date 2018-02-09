@@ -1,0 +1,11 @@
+1. Ir al repositorio y ejecutar ssh-keygen -t rsa -C "your.email@example.com" -b 4096 
+2. Generar la llave publica y agregarla en GitLab*** Please tell me who you are.
+3. Ejecutar el git clone
+4. Crear rama con git checkout -b marlon (Si la rama ya esta creada saltar con git checkout marlon)
+4. Realizar un cambio y ejecutar git add .
+5. git commit -m 'added a new footer [issue 53]' 
+6. git log (para ver las acciones en local)
+7. git push origin marlon (para mandar una rama a origen)
+
+
+Ver gitflow

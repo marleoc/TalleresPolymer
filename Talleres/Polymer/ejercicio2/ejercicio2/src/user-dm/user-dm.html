@@ -1,0 +1,107 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../user-dp/user-dp.html">
+
+<dom-module id="user-dm">
+  <template>
+    
+    <user-dp 
+            id="idUserDP" 
+            users="{{_lastResponse}}" 
+            error="{{_lastError}}">
+    </user-dp>
+  </template>
+
+  <script>
+    
+    class UserDm extends Polymer.Element {
+      static get is() { return 'user-dm'; }
+      static get properties() {
+        return {
+          users: {
+            type: Array,
+            notify: true,
+            observer: '_onLastUsers'
+          },
+          _lastResponse: {
+            type: Array,
+            observer: '_onLastResponse'
+          },
+          _lastError: {
+            type: Object,
+            observer: '_onLastError'
+          }
+        };
+      }
+
+      doRequest() {
+        console.log('doRequest en DM');
+        this.$.idUserDP.doRequest();
+      }
+
+      _onLastResponse(todos) {
+        let resultado = [];
+        for(let i = 0; i<todos.length; i++){
+          let todo = todos[i];
+          let userId = todo.codigo;
+          let name = todo.nombres;
+          let apes = todo.apellidos;
+          let email = todo.correo;
+          
+          let usuario = {
+              idUser: userId,
+              name: name,
+              apes: apes,
+              email: email
+          }
+          resultado.push(usuario);
+        } 
+        console.log('resultado:' + resultado.length);
+        this.set('users', resultado);
+      }
+      _searchUsuario(idUsua){
+          let arreglo = this.users;
+          console.log(arreglo);
+          //Y lo recorremos
+          var obj = new Object();
+          for(var x=0; x<arreglo.length; x++) {
+              console.log(arreglo[x].idUser);
+              console.log(arreglo[x].name);
+              if(arreglo[x].idUser==idUsua){
+                obj.userid=arreglo[x].idUser;
+                obj.username=arreglo[x].name;
+                obj.userapes=arreglo[x].apes;
+                obj.email=arreglo[x].email;
+              }
+          }
+          return obj;
+      }
+      _updateUsuario(obj){
+          let arreglo = this.users;
+          let result = [];
+          for(var x=0; x<arreglo.length; x++) {
+              console.log("Param:"+obj.idUser)
+              if(arreglo[x].idUser==obj.idUser){
+                console.log("Cambiando a "+x)
+                this.users[x] = obj;
+              }
+              result.push(arreglo[x])
+          }
+          console.log("Actualiza en DM Usuario")
+          console.log(this.users)  
+          this.set('users', result);
+          return result;
+      } 
+      _onLastUsers(){
+        console.log("_onLastUsers:")
+        console.log(this.users)
+      }
+      _onLastError(error) {
+        if (error) {
+          console.log('_onLastError: error')
+        }
+      } 
+    }
+
+    window.customElements.define(UserDm.is, UserDm);
+  </script>
+</dom-module>

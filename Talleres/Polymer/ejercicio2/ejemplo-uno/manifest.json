@@ -1,0 +1,7 @@
+{
+  "name": "ejemplo-uno",
+  "short_name": "ejemplo-uno",
+  "description": "ejemplo uno ver estructura de polymer",
+  "start_url": "/",
+  "display": "standalone"
+}
